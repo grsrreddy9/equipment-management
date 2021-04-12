@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Main.apps.MainConfig',
     'logbook.apps.LogbookConfig',
+    'rest_framework',
 
 
 ]
