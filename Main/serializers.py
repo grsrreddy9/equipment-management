@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Manufacturer,Department,Product,Equipment
+from .models import Manufacturer,Department,Product,Equipment,Room,ProductGranulation
 
 
 
@@ -19,3 +19,13 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['product_name', 'product_code', 'product_strength']
+
+class ProductGranulationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductGranulation
+        fields = ['batch no', 'product', 'room', 'start_time', 'end_time']
+
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = ['number']
