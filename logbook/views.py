@@ -15,7 +15,15 @@ class LogBook(APIView):
 
         product_serializer = ProductSerializer(products, many=True)
         equipment_serializer = EquipmentSerializer(equipments, many=True)
-        return Response(equipment_serializer.data)
+        product_names = []
+        equipment_ids = []
+        for equipment in equipment_serializer.data:
+            equipment_ids.append(equipment['equipment_id'])
+        for product in product_serializer.data:
+            product_names.append(product['product_name'])
+        resp = {"equipment_ids": equipment_ids, "product_names": product_names}
+        return Response(resp)
+
 
 
 # Create your views here.

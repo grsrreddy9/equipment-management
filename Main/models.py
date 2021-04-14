@@ -22,7 +22,16 @@ class Equipment(models.Model):
  department= models.ForeignKey(Department, on_delete=models.CASCADE)
  manufacturer= models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
 
+class Room(models.Model):
+  number= models.CharField(max_length=10)
 
+
+class ProductGranulation(models.Model):
+ batchno= models.CharField(max_length=10)
+ product= models.ForeignKey(Product, on_delete=models.CASCADE)
+ room=models.ForeignKey(Room, on_delete=models.DO_NOTHING)
+ start_time=models.DateTimeField()
+ end_time=models.DateTimeField()
 
 
 
