@@ -9,7 +9,7 @@ class Department(models.Model):
 
 class Product(models.Model):
  product_name= models.CharField(max_length=100)
- product_code=models. CharField(max_length=10)
+ product_code=models.CharField(max_length=10)
  product_strength = models.CharField(max_length=10)
 
 

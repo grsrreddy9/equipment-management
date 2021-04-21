@@ -28,4 +28,49 @@ class DepartmentView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+class ProductView(APIView):
+
+        # authentication_classes = [authentication.TokenAuthentication]
+        # permission_classes = [permissions.IsAdminUser]
+
+        def get(self, request, format=None):
+            product = Product.objects.all()
+
+            product_serializer = ProductSerializer(product, many=True)
+
+            return Response(product_serializer.data)
+
+        def post(self, request, format=None):
+            # data = JSONParser().parse(request)
+            serializer = ProductSerializer(data=request.data)
+
+            print(request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=201)
+            return Response(serializer.errors, status=400)
+
+
+class EquipmentView(APIView):
+
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request, format=None):
+        equipment = Equipment.objects.all()
+
+        equipment_serializer = EquipmentSerializer(equipment, many=True)
+
+        return Response(equipment_serializer.data)
+
+    def post(self, request, format=None):
+        # data = JSONParser().parse(request)
+        serializer = EquipmentSerializer(data=request.data)
+
+        print(request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
 # Create your views here.
