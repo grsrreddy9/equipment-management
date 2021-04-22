@@ -1,7 +1,7 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import ProductSerializer , EquipmentSerializer , DepartmentSerializer
+from .serializers import ProductSerializer , EquipmentSerializer , DepartmentSerializer, ManufacturerSerializer
 from .models import  Manufacturer ,Department ,Product ,Equipment
 from rest_framework.parsers import JSONParser
 
@@ -25,6 +25,26 @@ class DepartmentView(APIView):
         print(request.data)
         if serializer.is_valid():
 
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+class ManufacturerView(APIView):
+
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request, format=None):
+        manufacturers = Manufacturer.objects.all()
+        manufacturer_serializer = ManufacturerSerializer(manufacturers, many=True)
+        return Response(manufacturer_serializer.data)
+
+    def post(self, request, format=None):
+       # data = JSONParser().parse(request)
+        serializer = ManufacturerSerializer(data=request.data)
+
+        print(request.data)
+        if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
@@ -72,5 +92,8 @@ class EquipmentView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
+        print("Errors: *******************")
+        print(serializer.errors)
+        print("Errors: ######################")
         return Response(serializer.errors, status=400)
 # Create your views here.
