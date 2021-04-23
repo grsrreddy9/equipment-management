@@ -85,10 +85,12 @@ class EquipmentView(APIView):
         return Response(equipment_serializer.data)
 
     def post(self, request, format=None):
-        # data = JSONParser().parse(request)
-        serializer = EquipmentSerializer(data=request.data)
-
         print(request.data)
+        data = request.data
+        # department = Department.objects.get(id=data.department)
+        # generated_id = department.name[0:3] + "abc"
+        # data['equipment_id'] = generated_id
+        serializer = EquipmentSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
