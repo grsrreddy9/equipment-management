@@ -12,8 +12,6 @@ class DepartmentView(APIView):
 
     def get(self, request, format=None):
         department = Department.objects.all()
-
-
         department_serializer = DepartmentSerializer(department, many=True)
 
         return Response(department_serializer.data)
@@ -98,4 +96,6 @@ class EquipmentView(APIView):
         print(serializer.errors)
         print("Errors: ######################")
         return Response(serializer.errors, status=400)
+
+
 # Create your views here.

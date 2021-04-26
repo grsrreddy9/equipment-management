@@ -20,12 +20,15 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id', 'product_name', 'product_code', 'product_strength']
 
-class ProductGranulationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductGranulation
-        fields = ['id', 'batch no', 'product', 'room', 'start_time', 'end_time']
-
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = ['id', 'number']
+
+class ProductGranulationSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+    room = RoomSerializer()
+    class Meta:
+        model = ProductGranulation
+        fields = ['id', 'batch_number', 'product', 'room', 'start_time', 'end_time']
+

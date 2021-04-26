@@ -1,8 +1,15 @@
 import uuid
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
 # Create your models here.
+class User(AbstractUser):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField()
+
 class Manufacturer(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
@@ -37,9 +44,9 @@ class Room(models.Model):
 
 class ProductGranulation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    batchno = models.CharField(max_length=10)
+    batch_number = models.CharField(max_length=10)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.DO_NOTHING)
+    equipment = models.ManyToManyField(Equipment)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-

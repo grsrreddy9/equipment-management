@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import LogBook
+from .views import LogBookView
 urlpatterns = [
-    path('data', LogBook.as_view()),
+    path('', LogBookView.as_view()),
 ]

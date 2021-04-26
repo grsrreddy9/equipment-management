@@ -88,12 +88,14 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'equipmentmanagement',
         'USER': 'postgres',
-        'PASSWORD': 'Superman2',
-        # 'PASSWORD': 'admin',
+        # 'PASSWORD': 'Superman2',
+        'PASSWORD': 'admin',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
+
+AUTH_USER_MODEL = 'Main.User'
 
 
 # Password validation
