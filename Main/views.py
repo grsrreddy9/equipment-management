@@ -1,8 +1,8 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import ProductSerializer , EquipmentSerializer , DepartmentSerializer, ManufacturerSerializer
-from .models import  Manufacturer ,Department ,Product ,Equipment
+from .serializers import ProductSerializer , EquipmentSerializer , DepartmentSerializer, ManufacturerSerializer, UserSerializer, ProductGranulationSerializer
+from .models import  Manufacturer ,Department ,Product ,Equipment, User, ProductGranulation
 from rest_framework.parsers import JSONParser
 
 class DepartmentView(APIView):
@@ -96,6 +96,21 @@ class EquipmentView(APIView):
         print(serializer.errors)
         print("Errors: ######################")
         return Response(serializer.errors, status=400)
+
+
+class UserView(APIView):
+    def get(self, request, format=None):
+        users = User.objects.all()
+        user_serializer = UserSerializer(users, many=True)
+        return Response(user_serializer.data)
+
+
+class ProductGranulationView(APIView):
+    def get(self, request, format=None):
+        product_details = ProductGranulation.objects.all()
+        product_details_serializer = ProductGranulationSerializer(product_details, many=True)
+        return Response(product_details_serializer.data)
+
 
 
 # Create your views here.

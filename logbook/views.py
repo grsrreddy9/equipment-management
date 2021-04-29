@@ -25,5 +25,13 @@ class LogBookView(APIView):
         return Response(log_book_serializer.errors, status=400)
 
 
+class CleanTypeView(APIView):
+
+    def get(self, request, format=None):
+        clean_types = CleanType.objects.all()
+        clean_types_serializer = CleanTypeSerializer(clean_types, many=True)
+        return Response(clean_types_serializer.data)
+
+
 
 # Create your views here.
