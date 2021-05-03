@@ -26,9 +26,9 @@ class RoomSerializer(serializers.ModelSerializer):
         fields = ['id', 'number']
 
 class ProductGranulationSerializer(serializers.ModelSerializer):
-    product = ProductSerializer()
-    room = RoomSerializer()
-    equipment = EquipmentSerializer(many=True)
+    # product = ProductSerializer()
+    # room = RoomSerializer()
+    # equipment = EquipmentSerializer(many=True)
     class Meta:
         model = ProductGranulation
         fields = ['id', 'batch_number', 'equipment',  'product', 'room', 'start_time', 'end_time']

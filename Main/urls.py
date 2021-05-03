@@ -5,14 +5,16 @@ from .views import (
     ManufacturerView,
     ProductView,
     UserView,
-    ProductGranulationView
+    ProductGranulationView,
+    RoomView
 )
 
 urlpatterns = [
-    path("department", DepartmentView.as_view()),
-    path("product", ProductView.as_view()),
-    path("equipment", EquipmentView.as_view()),
+    path("departments", DepartmentView.as_view()),
+    path("products", ProductView.as_view()),
+    path("equipments", EquipmentView.as_view()),
     path("manufacturers", ManufacturerView.as_view()),
     path("users", UserView.as_view()),
     path("product-details", ProductGranulationView.as_view()),
+    path("rooms", RoomView.as_view())
 ]

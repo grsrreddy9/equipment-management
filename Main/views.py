@@ -1,9 +1,25 @@
-
+from datetime import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import ProductSerializer , EquipmentSerializer , DepartmentSerializer, ManufacturerSerializer, UserSerializer, ProductGranulationSerializer
-from .models import  Manufacturer ,Department ,Product ,Equipment, User, ProductGranulation
-from rest_framework.parsers import JSONParser
+from .serializers import (
+    ProductSerializer,
+    EquipmentSerializer,
+    DepartmentSerializer,
+    ManufacturerSerializer,
+    UserSerializer,
+    ProductGranulationSerializer,
+    RoomSerializer
+)
+from .models import (
+    Manufacturer,
+    Department,
+    Product,
+    Equipment,
+    User,
+    ProductGranulation,
+    Room,
+)
+
 
 class DepartmentView(APIView):
 
@@ -17,7 +33,7 @@ class DepartmentView(APIView):
         return Response(department_serializer.data)
 
     def post(self, request, format=None):
-       # data = JSONParser().parse(request)
+        # data = JSONParser().parse(request)
         serializer = DepartmentSerializer(data=request.data)
 
         print(request.data)
@@ -26,6 +42,7 @@ class DepartmentView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
 
 class ManufacturerView(APIView):
 
@@ -38,7 +55,7 @@ class ManufacturerView(APIView):
         return Response(manufacturer_serializer.data)
 
     def post(self, request, format=None):
-       # data = JSONParser().parse(request)
+        # data = JSONParser().parse(request)
         serializer = ManufacturerSerializer(data=request.data)
 
         print(request.data)
@@ -47,27 +64,28 @@ class ManufacturerView(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
+
 class ProductView(APIView):
 
-        # authentication_classes = [authentication.TokenAuthentication]
-        # permission_classes = [permissions.IsAdminUser]
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_classes = [permissions.IsAdminUser]
 
-        def get(self, request, format=None):
-            product = Product.objects.all()
+    def get(self, request, format=None):
+        product = Product.objects.all()
 
-            product_serializer = ProductSerializer(product, many=True)
+        product_serializer = ProductSerializer(product, many=True)
 
-            return Response(product_serializer.data)
+        return Response(product_serializer.data)
 
-        def post(self, request, format=None):
-            # data = JSONParser().parse(request)
-            serializer = ProductSerializer(data=request.data)
+    def post(self, request, format=None):
+        # data = JSONParser().parse(request)
+        serializer = ProductSerializer(data=request.data)
 
-            print(request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=201)
-            return Response(serializer.errors, status=400)
+        print(request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
 
 
 class EquipmentView(APIView):
@@ -105,12 +123,44 @@ class UserView(APIView):
         return Response(user_serializer.data)
 
 
+class RoomView(APIView):
+    def get(self, request, format=None):
+        rooms = Room.objects.all()
+        room_serializer = RoomSerializer(rooms, many=True)
+        return Response(room_serializer.data)
+
+
 class ProductGranulationView(APIView):
     def get(self, request, format=None):
         product_details = ProductGranulation.objects.all()
-        product_details_serializer = ProductGranulationSerializer(product_details, many=True)
-        return Response(product_details_serializer.data)
+        product_details_serializer = ProductGranulationSerializer(
+            product_details, many=True
+        )
+        data = product_details_serializer.data
+        for index in range(len(data)):
+            product = Product.objects.get(id=data[index]['product'])
+            product_serializer = ProductSerializer(product)
+            equipments = Equipment.objects.filter(id__in=data[index]['equipment'])
+            equipment_serializer = EquipmentSerializer(equipments, many=True)
+            room = Room.objects.get(id=data[index]['room'])
+            room_serializer = RoomSerializer(room)
+            data[index]['product'] = product_serializer.data
+            data[index]['equipment'] = equipment_serializer.data
+            data[index]['room'] = room_serializer.data
+        return Response(data)
 
+    def post(self, request, format=None):
+        print(request.data)
+        data = request.data
+        now = datetime.now()
+        data['start_time'] = now
+        data['end_time'] = now
+        serializer = ProductGranulationSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        print(serializer.errors)
+        return Response(serializer.errors, status=400)
 
 
 # Create your views here.
