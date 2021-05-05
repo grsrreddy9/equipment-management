@@ -152,10 +152,7 @@ class ProductGranulationView(APIView):
     def post(self, request, format=None):
         print(request.data)
         data = request.data
-        now = datetime.now()
-        data['start_time'] = now
-        data['end_time'] = now
-        serializer = ProductGranulationSerializer(data=data)
+        serializer = ProductGranulationSerializer(data=data, fields=('batch_number', 'equipment',  'product', 'room', 'start_time'))
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)

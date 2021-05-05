@@ -49,4 +49,4 @@ class ProductGranulation(models.Model):
     room = models.ForeignKey(Room, on_delete=models.DO_NOTHING)
     equipment = models.ManyToManyField(Equipment)
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    end_time = models.DateTimeField(blank=True, null=True)
