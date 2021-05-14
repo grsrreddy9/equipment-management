@@ -20,9 +20,7 @@ from .models import (
     Room,
 )
 
-
 class DepartmentView(APIView):
-
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_classes = [permissions.IsAdminUser]
 
@@ -33,7 +31,6 @@ class DepartmentView(APIView):
         return Response(department_serializer.data)
 
     def post(self, request, format=None):
-        # data = JSONParser().parse(request)
         serializer = DepartmentSerializer(data=request.data)
 
         print(request.data)
@@ -55,7 +52,6 @@ class ManufacturerView(APIView):
         return Response(manufacturer_serializer.data)
 
     def post(self, request, format=None):
-        # data = JSONParser().parse(request)
         serializer = ManufacturerSerializer(data=request.data)
 
         print(request.data)
@@ -78,7 +74,6 @@ class ProductView(APIView):
         return Response(product_serializer.data)
 
     def post(self, request, format=None):
-        # data = JSONParser().parse(request)
         serializer = ProductSerializer(data=request.data)
 
         print(request.data)
@@ -101,7 +96,6 @@ class EquipmentView(APIView):
         return Response(equipment_serializer.data)
 
     def post(self, request, format=None):
-        print(request.data)
         data = request.data
         # department = Department.objects.get(id=data.department)
         # generated_id = department.name[0:3] + "abc"
@@ -110,16 +104,19 @@ class EquipmentView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
-        print("Errors: *******************")
-        print(serializer.errors)
-        print("Errors: ######################")
         return Response(serializer.errors, status=400)
 
 
-class UserView(APIView):
+class UsersView(APIView):
     def get(self, request, format=None):
-        users = User.objects.all()
-        user_serializer = UserSerializer(users, many=True)
+        user_id = request.query_params.get('id')
+        if (user_id):
+            user = User.objects.get(id=user_id)
+            user_serializer = UserSerializer(user)
+            print(user_serializer.data)
+        else:
+            users = User.objects.all()
+            user_serializer = UserSerializer(users, many=True)
         return Response(user_serializer.data)
 
 
@@ -150,14 +147,10 @@ class ProductGranulationView(APIView):
         return Response(data)
 
     def post(self, request, format=None):
-        print(request.data)
         data = request.data
         serializer = ProductGranulationSerializer(data=data, fields=('batch_number', 'equipment',  'product', 'room', 'start_time'))
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
-        print(serializer.errors)
         return Response(serializer.errors, status=400)
 
-
-# Create your views here.
