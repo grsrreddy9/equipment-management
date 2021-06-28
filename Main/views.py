@@ -154,3 +154,16 @@ class ProductGranulationView(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
+class ProductEndTime(APIView):
+
+    def post(self, request, format=None):
+        data = request.data
+        print("data", data)
+        if data['id']:
+            product_detail = ProductGranulation.objects.get(id=data['id'])
+            serializer = ProductGranulationSerializer(product_detail, data=data, fields=('id', 'end_time'))
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+

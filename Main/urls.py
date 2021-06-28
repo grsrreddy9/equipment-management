@@ -6,7 +6,8 @@ from .views import (
     ProductView,
     UsersView,
     ProductGranulationView,
-    RoomView
+    RoomView,
+    ProductEndTime
 )
 
 urlpatterns = [
@@ -17,5 +18,6 @@ urlpatterns = [
     # path("users/<slug:id>", UsersView.as_view()),
     path("users", UsersView.as_view()),
     path("product-details", ProductGranulationView.as_view()),
-    path("rooms", RoomView.as_view())
+    path("rooms", RoomView.as_view()),
+    path('end-batch', ProductEndTime.as_view())
 ]
