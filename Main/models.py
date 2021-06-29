@@ -11,9 +11,9 @@ class User(AbstractUser):
     email = models.EmailField()
 
 
-class Manufacturer(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100)
+# class Manufacturer(models.Model):
+#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#     name = models.CharField(max_length=100)
 
 
 class Department(models.Model):
@@ -35,7 +35,8 @@ class Equipment(models.Model):
     equipment_capacity = models.IntegerField()
     equipment_model = models.CharField(max_length=100)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+    manufacturer = models.CharField(max_length=100)
+    # manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
 
 
 class Room(models.Model):

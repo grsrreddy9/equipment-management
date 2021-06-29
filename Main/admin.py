@@ -1,13 +1,13 @@
 from django.contrib import admin
-from .models import User, Department, Manufacturer, Equipment, Room, Product, ProductGranulation
+from .models import User, Department, Equipment, Room, Product, ProductGranulation
 
 
 class DepartmentAdmin(admin.ModelAdmin):
     pass
 
 
-class ManufacturerAdmin(admin.ModelAdmin):
-    pass
+# class ManufacturerAdmin(admin.ModelAdmin):
+#     pass
 
 
 class EquipmentAdmin(admin.ModelAdmin):
@@ -30,7 +30,7 @@ class UserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Department, DepartmentAdmin)
-admin.site.register(Manufacturer, ManufacturerAdmin)
+# admin.site.register(Manufacturer, ManufacturerAdmin)
 admin.site.register(Equipment, EquipmentAdmin)
 admin.site.register(Room, RoomAdmin)
 admin.site.register(Product, ProductAdmin)

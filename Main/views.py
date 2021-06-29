@@ -5,13 +5,13 @@ from .serializers import (
     ProductSerializer,
     EquipmentSerializer,
     DepartmentSerializer,
-    ManufacturerSerializer,
+    # ManufacturerSerializer,
     UserSerializer,
     ProductGranulationSerializer,
     RoomSerializer
 )
 from .models import (
-    Manufacturer,
+    # Manufacturer,
     Department,
     Product,
     Equipment,
@@ -41,24 +41,24 @@ class DepartmentView(APIView):
         return Response(serializer.errors, status=400)
 
 
-class ManufacturerView(APIView):
+# class ManufacturerView(APIView):
 
-    # authentication_classes = [authentication.TokenAuthentication]
-    # permission_classes = [permissions.IsAdminUser]
+#     # authentication_classes = [authentication.TokenAuthentication]
+#     # permission_classes = [permissions.IsAdminUser]
 
-    def get(self, request, format=None):
-        manufacturers = Manufacturer.objects.all()
-        manufacturer_serializer = ManufacturerSerializer(manufacturers, many=True)
-        return Response(manufacturer_serializer.data)
+#     def get(self, request, format=None):
+#         manufacturers = Manufacturer.objects.all()
+#         manufacturer_serializer = ManufacturerSerializer(manufacturers, many=True)
+#         return Response(manufacturer_serializer.data)
 
-    def post(self, request, format=None):
-        serializer = ManufacturerSerializer(data=request.data)
+#     def post(self, request, format=None):
+#         serializer = ManufacturerSerializer(data=request.data)
 
-        print(request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+#         print(request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=201)
+#         return Response(serializer.errors, status=400)
 
 
 class ProductView(APIView):

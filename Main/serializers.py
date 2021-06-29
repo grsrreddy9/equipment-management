@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Manufacturer, Department, Product, Equipment, Room, ProductGranulation, User
+from .models import Department, Product, Equipment, Room, ProductGranulation, User
 
 
 
@@ -7,10 +7,10 @@ class EquipmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Equipment
         fields = ['id', 'equipment_name', 'equipment_id', 'equipment_capacity', 'equipment_model', 'department', 'manufacturer']
-class ManufacturerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Manufacturer
-        fields = ['id','name']
+# class ManufacturerSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Manufacturer
+#         fields = ['id','name']
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
